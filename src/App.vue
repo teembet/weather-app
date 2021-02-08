@@ -35,7 +35,7 @@ export default {
   --body-font: 'Poppins', sans-serif;
   --biggest-font-size: 5.25rem;
   --h3-font-size: 3.25rem;
-  --normal-font-size: 1.5rem;
+  --normal-font-size: 1.6rem;
   --smaller-font-size: .813rem;
   --small-font-size: 1.25rem;
 

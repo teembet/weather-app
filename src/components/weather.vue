@@ -1,15 +1,19 @@
 <template>
   <div>
-  <h1 class="title col-12">Weather Forecast For {{address}}</h1> 
+  <h1 class="title col-12">Weather Forecast For {{address?address:'N/A'}}</h1> 
 
   <div class="icons">
-<img class="icon img-fluid" src="../assets/clear-night.svg"/>
+<!-- <img class="icon img-fluid" src="../assets/clear-night.svg"/> -->
+ <!-- <img id="icon" :src="`http://openweathermap.org/img/wn/` + weather.weather[0].icon + `@2x.png`"/> -->
+ <div>
+              <canvas style="margin-top: 15px;" id="skycon"  width="150" height="150"></canvas>
+             </div>
   </div>
  <div class="row-display">
-   <span class="small-display">{{time}}</span>
-   <span class="small-display"> {{temp}}°f
+   <span class="small-display">{{time? time:'N/A'}}</span>
+   <span class="small-display"> {{temp? temp:'N/A'}} °C
    </span>
-   <span class="small-display">{{type}}</span>
+   <span class="small-display">{{type? type:'N/A'}}</span>
  </div>
  <div class="container ">
  <div class="card col-lg-8 col-md-8 col-xs-12 col-sm-12">
@@ -26,7 +30,7 @@
       :placeholder="$t('Your place')" -->        
             
         </p></div>
-        <div class="button col-lg-4 mb-3">
+        <div class="button col-lg-4 mt-3">
 <button @click="submit()" class="btn">Search &nbsp; <i class='bx bx-search-alt bx-sm'></i></button>
 </div>
 </div>
@@ -34,7 +38,7 @@
  </div>
   </div>
 </template>
-
+<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
 <script>
 import axios from 'axios'
 export default {
@@ -53,7 +57,9 @@ export default {
      weatherKey:'43c9da3226d96181c283608a2624f91a',
      time:'',
      temp:'',
-   type:''
+   type:'',
+   skycons: new Skycons({"color":"orange"}),
+   weather:''
 
 
    
@@ -61,6 +67,7 @@ export default {
     }
   },
    mounted() {
+     this.locatorButtonPressed()
      const google = window.google
  this.autocomplete= new google.maps.places.Autocomplete(
     document.getElementById("autocomplete")
@@ -102,7 +109,8 @@ export default {
  this.long=this.place.geometry.viewport.Qa.i
  this.address=this.place.address_components[0].long_name
 this.getWeather(this.lat,this.long)
-this.getTime(this.lat,this.long)
+// this.getTime(this.lat,this.long)
+ 
  
 //  if (!this.place.geometry) {
 //       // User entered the name of a Place that was not suggested and
@@ -153,9 +161,49 @@ async getWeather(lat, long) {
       if (data.error_message) {
          console.log(data.error_message)
       } else {
-    this.temp=Math.round((data.main.temp-32)/1.8)
+        this.getTime(lat,long)
+    this.temp=Math.round(data.main.temp-273.15)
  this.type = data.weather[0].main;
-         console.log(data)
+ this.weather=data
+ switch(this.type.toLowerCase()) {
+        case "clouds":
+          if (this.time >= 19 || this.time <= 4) {
+            this.skycons.set("skycon", Skycons.PARTLY_CLOUDY_NIGHT);
+          } else {
+            this.skycons.set("skycon", Skycons.CLOUDY);
+          }
+          this.skycons.play();
+          break;
+        case "rain":
+          this.skycons.set("skycon", Skycons.RAIN);
+          this.skycons.play();
+          break;
+        case "drizzle":
+          this.skycons.set("skycon", Skycons.RAIN);
+          this.skycons.play();
+          break;
+        case "thunderstorm":
+            this.skycons.set("skycon", Skycons.RAIN);
+            this.skycons.play();
+            break;
+        case "snow":
+          this.skycons.set("skycon", Skycons.SNOW);
+          this.skycons.play();
+          break;
+        case "clear": 
+          if (this.time >= 19 || this.time <= 4) {
+            this.skycons.set("skycon", Skycons.CLEAR_NIGHT);
+          } else {
+            this.skycons.set("skycon", Skycons.CLEAR_DAY);
+          }
+          this.skycons.play();
+          break;
+        default:
+            this.skycons.set("skycon", Skycons.WIND);
+            this.skycons.play();
+      
+    }
+        
       }
    } catch (error) {
       console.log(error.message);
@@ -192,7 +240,9 @@ locatorButtonPressed() {
       position => {
          this.getStreetAddressFrom(position.coords.latitude, position.coords.longitude)
          this.getWeather(position.coords.latitude, position.coords.longitude)
-         this.getTime(position.coords.latitude, position.coords.longitude)
+        //  this.getTime(position.coords.latitude, position.coords.longitude)
+         
+         
       },
       error => {
          console.log(error.message);
@@ -202,7 +252,7 @@ locatorButtonPressed() {
   },
 
   created(){
-this.locatorButtonPressed()
+
 
 
   }
@@ -237,7 +287,8 @@ this.locatorButtonPressed()
 }
 .small-display{
   color: var(--text-color);
-  
+  font-weight:600 ;
+  display: flex;
   padding: 10px;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
@@ -305,7 +356,7 @@ this.locatorButtonPressed()
 input{
   border-radius: 8px  !important;
   background-color: transparent !important;
- 
+ color: var(--body-color);
   font-size: var(--smaller-font-size);
 }
 
