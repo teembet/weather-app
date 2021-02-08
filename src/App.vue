@@ -73,7 +73,7 @@ export default {
 body{
   margin: var(--header-height) 0 0 0;
   font-family: var(--body-font);
-  font-size: var(--normal-font-size);
+  /* font-size: var(--normal-font-size); */
   background-color: var(--body-color);
   color: var(--text-color);
   line-height: 1.5;
