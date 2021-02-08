@@ -97,7 +97,7 @@ input{
   font-family: var(--body-font);
   display: flex;
   justify-content: center;
-  font-size: var(--small-font-size);
+  font-size: var(--smaller-font-size);
   font-weight: 400  !important;
   margin-top: 10px  !important;
 }
