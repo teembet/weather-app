@@ -88,19 +88,20 @@ input{
   border-radius: 8px  !important;
   background-color: white !important;
  border-style: solid !important;
+ height: 60px;
+ padding: 2px;
   
 }
 .footer{
   text-align: center;
+  font-family: var(--body-font);
   display: flex;
   justify-content: center;
   font-size: var(--small-font-size);
   font-weight: 400  !important;
   margin-top: 10px  !important;
 }
-.col-md-12{
-  padding: 12px !important;
-}
+
 </style>
 
 
