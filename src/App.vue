@@ -98,6 +98,9 @@ input{
   font-weight: 400  !important;
   margin-top: 10px  !important;
 }
+.col-md-12{
+  padding: 12px !important;
+}
 </style>
 
 
