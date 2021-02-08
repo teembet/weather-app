@@ -87,7 +87,7 @@ body{
 input{
   border-radius: 8px  !important;
   background-color: white !important;
- 
+ border-style: solid !important;
   
 }
 .footer{
