@@ -357,7 +357,7 @@ input{
   border-radius: 8px  !important;
   background-color: transparent !important;
  color: var(--body-color);
-  font-size: var(--smaller-font-size);
+  
 }
 
 

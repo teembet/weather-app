@@ -96,7 +96,7 @@ input{
   justify-content: center;
   font-size: var(--small-font-size);
   font-weight: 400  !important;
-  margin-top: 10px;
+  margin-top: 10px  !important;
 }
 </style>
 
