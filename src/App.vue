@@ -2,6 +2,9 @@
   <div id="app">
     
     <weather/>
+    <footer>
+      <h3 class="footer">Built By Teembet Using Vue Js And SCSS. Deployed with Netlify</h3>
+    </footer>
   </div>
 </template>
 
@@ -85,9 +88,16 @@ input{
   border-radius: 8px  !important;
   background-color: white !important;
  
-  font-size: var(--smaller-font-size);
+  
 }
-
+.footer{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: var(--small-font-size);
+  font-weight: 400  !important;
+  margin-top: 10px;
+}
 </style>
 
 
